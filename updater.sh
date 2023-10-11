@@ -44,7 +44,7 @@ all_up() {
   echo "----------------"
   echo "| Updating all |"
   echo "----------------"
-  echo " The following updater will be executed:"
+  echo " The following updaters will be executed:"
   echo "   1) dnf"
   echo "   2) flatpak"
   echo "   3) tldr"
@@ -96,7 +96,7 @@ main() {
     echo "At least one option must be given..."
     usage
     exit 1
-  # Execute 'all' if it was passed as option
+  # Execute 'all' if it is passed as option
   elif options_all "$@"
   then
     # In case 'all' is not the only option, print a message
@@ -133,6 +133,7 @@ main() {
           echo "Unknown option(s) '$@'"
           usage
 	  exit 1
+	  ;;
       esac
     done
   fi
