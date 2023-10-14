@@ -4,12 +4,14 @@ usage() {
   echo
   echo "Usage:"
   echo
-  echo "  help --help -h        Print this help "
-  echo "  list-commands         Print what command(s) each updater will run"
-  echo "  all                   Execute all updaters listed below"
-  echo "  dnf                   Update dnf packages with distrosync"
-  echo "  flatpak               Update flatpak packages and remove unused packages"
-  echo "  tldr                  Update tldr cache"
+  echo "  help --help -h          Print this help "
+  echo "  list-commands           Print what command(s) each updater will run"
+  echo "  all                     Execute all updaters listed below"
+  echo "  dnf                     Update dnf packages with distrosync"
+  echo "  dnf-autoremove          Update dnf packages with distrosync and remove unused packages"
+  echo "  flatpak                 Update flatpak packages"
+  echo "  flatpak-autoremove      Update flatpak packages and remove unused packages"
+  echo "  tldr                    Update tldr cache"
   echo
 }
 
@@ -32,8 +34,14 @@ list_commands() {
   echo "dnf:"
   print_function_command dnf_up
   echo
+  echo "dnf-autoremove:"
+  print_function_command dnf_up_rm
+  echo
   echo "flatpak:"
   print_function_command flatpak_up
+  echo
+  echo "flatpak-autoremove:"
+  print_function_command flatpak_up_rm
   echo
   echo "tldr:"
   print_function_command tldr_up
@@ -45,11 +53,11 @@ all_up() {
   echo "| Updating all |"
   echo "----------------"
   echo " The following updaters will be executed:"
-  echo "   1) dnf"
-  echo "   2) flatpak"
+  echo "   1) dnf-autoremove"
+  echo "   2) flatpak-autoremove"
   echo "   3) tldr"
-  dnf_up
-  flatpak_up
+  dnf_up_rm
+  flatpak_up_rm
   tldr_up
 }
 
@@ -61,7 +69,22 @@ dnf_up() {
   sudo dnf distrosync --refresh
 }
 
+dnf_up_rm() {
+  echo "----------------"
+  echo "| Updating dnf |"
+  echo "----------------"
+  # Always refresh cache and remove unused packages
+  sudo bash -c "dnf distrosync --refresh && dnf autoremove"
+}
+
 flatpak_up() {
+  echo "--------------------"
+  echo "| Updating flatpak |"
+  echo "--------------------"
+  flatpak update
+}
+
+flatpak_up_rm() {
   echo "--------------------"
   echo "| Updating flatpak |"
   echo "--------------------"
@@ -121,8 +144,16 @@ main() {
           dnf_up
 	  shift
 	  ;;
+        dnf-autoremove)
+          dnf_up_rm
+	  shift
+	  ;;
         flatpak)
           flatpak_up
+	  shift
+	  ;;
+        flatpak-autoremove)
+          flatpak_up_rm
 	  shift
 	  ;;
         tldr)
