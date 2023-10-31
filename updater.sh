@@ -1,7 +1,8 @@
 #! /bin/bash
 
-# This hack is needed to get the correct value for COLUMNS or 'tput cols' when lauching the script on external terminal
-sleep 0.05
+# This hack is needed to always get the correct value for COLUMNS, or 'tput cols'.
+# This is useful when executing the script in new maximized terminal windows/tabs ('gnome-terminal' for example).
+sleep 0.1
 
 declare STYLISH
    TOP_CHAR=┬
