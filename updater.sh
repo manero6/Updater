@@ -144,7 +144,7 @@ all_up() {
 dnf_up() {
   print_title_stylish "dnf"
   # Always refresh cache
-  sudo dnf distrosync --refresh
+  sudo dnf distro-sync --refresh
 }
 
 dnf_up_rm() {
