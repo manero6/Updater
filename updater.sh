@@ -150,7 +150,7 @@ dnf_up() {
 dnf_up_rm() {
   print_title_stylish "dnf & autoremove"
   # Always refresh cache and remove unused packages
-  sudo bash -c "dnf distrosync --refresh && dnf autoremove"
+  sudo bash -c "dnf distro-sync --refresh && dnf autoremove"
 }
 
 flatpak_up() {
